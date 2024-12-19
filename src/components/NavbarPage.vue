@@ -1,23 +1,52 @@
 <template>
-    <header class="flex flex-row justify-between w-full pt-[50px] px-[100px]">
-        <router-link :to="{ name: 'home' }" class="inline-flex items-center h-full px-5 text-orange-500 font-bold">
+    <header class="relative flex flex-row justify-between w-full h-[70px] items-center md:px-[100px] px-5">
+        <router-link :to="{ name: 'home' }" class="inline-flex items-center h-full text-orange-500 font-bold">
             <img src="../assets/icons/logo.svg" alt="logo" />
         </router-link>
-        <div class="flex items-center gap-[76px]">
-            <router-link 
-                class="inline-flex items-center px-2 h-full transition-colors hover:bg-orange-500 hover:text-white">
+        <div class="md:flex hidden items-center gap-2 md:gap-[76px]">
+            <router-link
+                class="inline-flex items-center  h-full transition-colors hover:bg-orange-500 hover:text-white text-primary_10">
                 New
             </router-link>
-            <router-link 
-                class="inline-flex items-center px-2 h-full transition-colors hover:bg-orange-500 hover:text-white">
+            <router-link
+                class="inline-flex items-center  h-full transition-colors hover:bg-orange-500 hover:text-white">
                 Reading list
             </router-link>
-            <router-link 
-                class="inline-flex items-center px-2 h-full transition-colors hover:bg-orange-500 hover:text-white">
+            <router-link class="inline-flex items-center h-full transition-colors hover:bg-orange-500 hover:text-white">
                 Topics
             </router-link>
         </div>
+        <div class="md:hidden flex ">
+            <button class="lg:hidden focus:outline-none" @click="toggleMenu">
+                <span v-if="!isMenuOpen">
+                    <AlignJustify />
+                </span>
+                <span v-else>✖</span>
+            </button>
+        </div>
+        <nav v-show="isMenuOpen"
+            class="absolute flex flex-col top-full z-10 left-0 w-full text-black bg-white mt-0 space-y-2 text-center py-2 transition-all">
+            <router-link
+                class=" transition-colors hover:bg-orange-500 hover:text-white text-primary_10">
+                New
+            </router-link>
+            <router-link
+                class="transition-colors hover:bg-orange-500 hover:text-white">
+                Reading list
+            </router-link>
+            <router-link class="transition-colors hover:bg-orange-500 hover:text-white">
+                Topics
+            </router-link>
+        </nav>
+
     </header>
 </template>
 <script setup>
+import { AlignJustify } from 'lucide-vue-next';
+import { ref } from "vue";
+const isMenuOpen = ref(false);
+
+const toggleMenu = () => {
+    isMenuOpen.value = !isMenuOpen.value;
+};
 </script>

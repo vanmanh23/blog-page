@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="flex flex-col">
         <NavbarPage />
         <main>
-            <div class="max-w-[1200px] mx-auto">
+            <div class="content min-w-fit">
                 <router-view />
             </div>
         </main>
@@ -14,15 +14,3 @@
 import NavbarPage from '@/components/NavbarPage.vue';
 import FooterPage from '@/components/FooterPage.vue';
 </script>
-
-<style>
-    .container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        justify-content: flex-start;
-        align-content: flex-start;
-        align-items: start;
-        align-self: flex-start;
-    }
-</style>

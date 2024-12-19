@@ -1,6 +1,7 @@
 import HomePage from "@/pages/HomePage.vue";
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { createRouter, createWebHistory } from "vue-router";
+import BlogDetail from "@/pages/BlogDetail.vue";
 const routes  = [
     {
         path: '/',
@@ -10,6 +11,11 @@ const routes  = [
                 path: '/',
                 name: 'home',
                 component: HomePage
+            },
+            {
+                path: '/blog/:id',
+                name: 'BlogDetail',
+                component: BlogDetail,
             }
         ]
     },
