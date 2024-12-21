@@ -2,6 +2,7 @@ import HomePage from "@/pages/HomePage.vue";
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { createRouter, createWebHistory } from "vue-router";
 import BlogDetail from "@/pages/BlogDetail.vue";
+import CreateBlog from "@/pages/CreateBlog.vue";
 const routes  = [
     {
         path: '/',
@@ -16,6 +17,11 @@ const routes  = [
                 path: '/blog/:id',
                 name: 'BlogDetail',
                 component: BlogDetail,
+            },
+            {
+                path: '/blog/create',
+                name: 'CreateBlog',
+                component: CreateBlog,
             }
         ]
     },

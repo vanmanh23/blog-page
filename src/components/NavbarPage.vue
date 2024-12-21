@@ -15,6 +15,9 @@
             <router-link class="inline-flex items-center h-full transition-colors hover:bg-orange-500 hover:text-white">
                 Topics
             </router-link>
+            <router-link :to="{ name: 'CreateBlog' }">
+                <ButtonDefault title="Create" />
+            </router-link>
         </div>
         <div class="md:hidden flex ">
             <button class="lg:hidden focus:outline-none" @click="toggleMenu">
@@ -37,6 +40,9 @@
             <router-link class="transition-colors hover:bg-orange-500 hover:text-white">
                 Topics
             </router-link>
+            <router-link :to="{ name: 'CreateBlog'}">
+                <ButtonDefault title="Create" />
+            </router-link>
         </nav>
 
     </header>
@@ -44,6 +50,7 @@
 <script setup>
 import { AlignJustify } from 'lucide-vue-next';
 import { ref } from "vue";
+import ButtonDefault from './ButtonDefault.vue';
 const isMenuOpen = ref(false);
 
 const toggleMenu = () => {

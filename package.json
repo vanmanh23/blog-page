@@ -10,6 +10,8 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
     "lucide": "^0.468.0",
     "lucide-vue-next": "^0.468.0",
     "normalize.css": "^8.0.1",
