@@ -5,15 +5,15 @@
             <div class="flex flex-col gap-5">
                 <div class="flex flex-col gap-2">
                     <label class="text-primary_15">Title</label>
-                    <input v-model="form.title" type="text" class="w-full drop-shadow-lg rounded-lg outline-none px-1 py-1">
+                    <input v-model="form.title" type="text" class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1">
                 </div>
                 <div class="flex flex-col gap-2">
                     <label class="text-primary_15">Text</label>
-                    <textarea v-model="form.text" type="text" class="w-full drop-shadow-lg rounded-lg outline-none px-1 py-1" rows="2" />
+                    <textarea v-model="form.text" type="text" class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1" rows="2" />
                 </div>
                 <div class="flex flex-col gap-2">
                     <label class="text-primary_15">Heading</label>
-                    <input v-model="form.heading" type="text" class="w-full drop-shadow-lg rounded-lg outline-none px-1 py-1">
+                    <input v-model="form.heading" type="text" class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1">
                 </div>
                 <div class="flex flex-col gap-2">
                     <label class="text-primary_15">Choose image</label>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <label class="text-primary_15">Content</label>
-                    <textarea v-model="form.content" type="text" class="w-full drop-shadow-lg rounded-lg outline-none px-1 py-1" rows="5" />
+                    <textarea v-model="form.content" type="text" class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1" rows="5" />
                 </div>
                 <div class="flex justify-end">
                     <!-- <ButtonDefault title="Create Post" /> -->

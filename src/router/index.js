@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { createRouter, createWebHistory } from "vue-router";
 import BlogDetail from "@/pages/BlogDetail.vue";
 import CreateBlog from "@/pages/CreateBlog.vue";
+import ListBlogs from "@/pages/ListBlogs.vue";
 const routes  = [
     {
         path: '/',
@@ -22,10 +23,15 @@ const routes  = [
                 path: '/blog/create',
                 name: 'CreateBlog',
                 component: CreateBlog,
+            },
+            {
+                path: '/blog/list',
+                name: 'ListBlogs',
+                component: ListBlogs,
             }
         ]
     },
-    
+
 ]
 
 const router = createRouter({
