@@ -58,7 +58,7 @@ onMounted(() => {
     <div class="grid md:grid-cols-3 sm:grid-cols-2 2xl:grid-cols-4 grid-cols-1 justify-center gap-6">
       <div v-for="(blog, index) in data" :key="index">
         <router-link :to="{ name: 'BlogDetail', params: { id: blog.id } }">
-          <BlogCard :img="blog.imageurl" :title="blog.title" :text="blog.text" />
+          <BlogCard :img="blog.imageUrl" :title="blog.title" :text="blog.text" />
         </router-link>
       </div>
     </div>
