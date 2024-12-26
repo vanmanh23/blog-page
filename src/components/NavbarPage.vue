@@ -5,13 +5,13 @@
     </router-link>
     <div class="md:flex hidden items-center gap-2 md:gap-[76px]">
       <router-link
-        class="inline-flex items-center  h-full transition-colors hover:bg-orange-500 hover:text-white text-primary_10">
+        class="inline-flex items-center  h-full transition-colors px-3 py-1 rounded-lg hover:bg-slate-100 hover:text-black text-primary_10">
         New
       </router-link>
-      <router-link :to="{ name: 'ListBlogs' }" class="inline-flex items-center  h-full transition-colors hover:bg-orange-500 hover:text-white">
+      <router-link :to="{ name: 'ListBlogs' }" class="inline-flex px-3 py-1 rounded-lg items-center  h-full transition-colors hover:bg-slate-100 hover:text-black">
         Reading list
       </router-link>
-      <router-link class="inline-flex items-center h-full transition-colors hover:bg-orange-500 hover:text-white">
+      <router-link class="inline-flex items-center h-full px-3 py-1 rounded-lg transition-colors hover:bg-slate-100 hover:text-black">
         Topics
       </router-link>
       <router-link :to="{ name: 'CreateBlog' }">

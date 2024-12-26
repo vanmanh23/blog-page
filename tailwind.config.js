@@ -14,6 +14,7 @@ export default {
         primary_25: '#111210',
         bg_primary: '#f9f9fb',
         btn_primary: '#9283E0',
+        bd_primary: '#e0e0e0'
       }
     },
   },

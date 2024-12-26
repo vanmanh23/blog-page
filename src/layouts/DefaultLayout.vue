@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col justify-between">
         <NavbarPage />
         <main>
-            <div class="content min-w-fit">
+            <div class="content min-h-fit min-w-fit">
                 <router-view />
             </div>
         </main>

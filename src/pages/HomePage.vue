@@ -3,46 +3,25 @@ import { getBlogs } from '@/api/blogsApi';
 import BlogCard from '@/components/BlogCard.vue';
 import { Search } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
+import Skeleton from 'primevue/skeleton';
 
 const data = ref([]);
+const isLoading = ref(false);
+
 const fetchData = async () => {
+  isLoading.value = true;
   try {
     const response = await getBlogs();
     data.value = response.result;
   } catch (error) {
     console.error('Error fetching data:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 onMounted(() => {
   fetchData();
 });
-// const items = [
-//   {
-//     id: 1,
-//     img: 'https://cdn.britannica.com/35/238335-050-2CB2EB8A/Lionel-Messi-Argentina-Netherlands-World-Cup-Qatar-2022.jpg',
-//     title: 'How to Reinstall WordPress: 5 Different Methods Depending On Your Needs',
-//     text: 'User research is the reality check every project needs. Here’s our guide to why you should be doing it — and how to get started.'
-
-//   },
-//   {
-//     id: 2,
-//     img: 'https://cdn.britannica.com/35/238335-050-2CB2EB8A/Lionel-Messi-Argentina-Netherlands-World-Cup-Qatar-2022.jpg',
-//     title: 'How to Reinstall WordPress: 5 Different Methods Depending On Your Needs',
-//     text: 'User research is the reality check every project needs. Here’s our guide to why you should be doing it — and how to get started.'
-//   },
-//   {
-//     id: 3,
-//     img: 'https://cdn.britannica.com/35/238335-050-2CB2EB8A/Lionel-Messi-Argentina-Netherlands-World-Cup-Qatar-2022.jpg',
-//     title: 'How to Reinstall WordPress: 5 Different Methods Depending On Your Needs',
-//     text: 'User research is the reality check every project needs. Here’s our guide to why you should be doing it — and how to get started.'
-//   },
-//   {
-//     id: 4,
-//     img: 'https://cdn.britannica.com/35/238335-050-2CB2EB8A/Lionel-Messi-Argentina-Netherlands-World-Cup-Qatar-2022.jpg',
-//     title: 'How to Reinstall WordPress: 5 Different Methods Depending On Your Needs',
-//     text: 'User research is the reality check every project needs. Here’s our guide to why you should be doing it — and how to get started.'
-//   },
-// ]
 </script>
 
 <template>
@@ -55,13 +34,24 @@ onMounted(() => {
     <div>
       <h3 class="text-[12px] text-primary_20 uppercase">All Post</h3>
     </div>
-    <div class="grid md:grid-cols-3 sm:grid-cols-2 2xl:grid-cols-4 grid-cols-1 justify-center gap-6">
+    <div v-if="!isLoading" class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 2xl:grid-cols-4 grid-cols-1 justify-center gap-6">
       <div v-for="(blog, index) in data" :key="index">
         <router-link :to="{ name: 'BlogDetail', params: { id: blog.id } }">
           <BlogCard :img="blog.imageUrl" :title="blog.title" :text="blog.text" />
         </router-link>
       </div>
-    </div>
+      </div>
+      <!--  -->
+      <div v-if="isLoading" class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 2xl:grid-cols-4 grid-cols-1 justify-center gap-6">
+        <div v-for="index in 12" :key="index" class="">
+          <div class="flex flex-col gap-2 mb-4">
+            <Skeleton height="130px" class=""></Skeleton>
+            <Skeleton class=""></Skeleton>
+            <Skeleton height="30px" class="mb-2"></Skeleton>
+            <Skeleton ></Skeleton>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 <style></style>
