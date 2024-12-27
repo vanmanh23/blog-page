@@ -33,3 +33,29 @@ export const editBlogById = async (id, data) => {
     throw error;
   }
 };
+
+export const updateBlogById = async (id, data) => {
+  try {
+    const res = await axios.patch(
+      `${import.meta.env.VITE_APP_SERVER_URL}/blog/update/${id}`,
+      data
+    )
+    return res.data.status
+  } catch (error) {
+    console.error("Error updating blog:", error);
+    throw error;
+  }
+}
+
+export const createBlog = async (data) => {
+  try {
+    const res = await axios.post(
+      `${import.meta.env.VITE_APP_SERVER_URL}/blog/create`,
+      data
+    );
+    return res.data.status;
+  } catch (error) {
+    console.error("Error creating blog:", error);
+    throw error;
+  }
+};

@@ -3,16 +3,13 @@
     <router-link :to="{ name: 'home' }" class="inline-flex items-center h-full text-orange-500 font-bold">
       <img src="../assets/icons/logo.svg" alt="logo" />
     </router-link>
-    <div class="md:flex hidden items-center gap-2 md:gap-[76px]">
-      <router-link
+    <div class="md:flex hidden items-center gap-2 md:gap-[40px] sm:gap-[20px]">
+      <router-link :to="{ name: 'CreateBlog' }"
         class="inline-flex items-center  h-full transition-colors px-3 py-1 rounded-lg hover:bg-slate-100 hover:text-black text-primary_10">
         New
       </router-link>
       <router-link :to="{ name: 'ListBlogs' }" class="inline-flex px-3 py-1 rounded-lg items-center  h-full transition-colors hover:bg-slate-100 hover:text-black">
         Reading list
-      </router-link>
-      <router-link class="inline-flex items-center h-full px-3 py-1 rounded-lg transition-colors hover:bg-slate-100 hover:text-black">
-        Topics
       </router-link>
       <router-link :to="{ name: 'CreateBlog' }">
         <ButtonDefault title="Create" />

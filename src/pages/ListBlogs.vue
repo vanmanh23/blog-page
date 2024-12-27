@@ -1,16 +1,15 @@
 <template>
-  <div v-if="!isLoading"
-    class="flex flex-col w-full px-[20px] md:px-[150px] bg-bg_primary pt-9 gap-2 overflow-hidden">
+  <div v-if="!isLoading" class="flex flex-col w-full px-[20px] md:px-[150px] bg-bg_primary pt-9 gap-2 overflow-hidden">
     <DataTable v-model:filters="filters" :value="data" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]"
       :globalFilterFields="['title', 'text', 'heading']">
       <!--  -->
       <template #header>
         <div class="relative flex justify-end">
-            <input v-model="filters['title'].value" placeholder="Keyword Search"
+          <input v-model="filters['title'].value" placeholder="Keyword Search"
             class="border border-bd_primary outline-none shadow-lg p-2 rounded-lg" />
-            <div class="absolute top-1/2 right-1 -translate-x-1/2 -translate-y-1/2">
-              <Search />
-            </div>
+          <div class="absolute top-1/2 right-1 -translate-x-1/2 -translate-y-1/2">
+            <Search />
+          </div>
         </div>
       </template>
       <template #empty> No customers found. </template>
@@ -30,14 +29,16 @@
           </div>
         </template>
       </Column>
-      <Column field="heading" header="Heading" style="width: 25%" class="hidden lg:table-cell xl:table-cell md:table-cell">
+      <Column field="heading" header="Heading" style="width: 25%"
+        class="hidden lg:table-cell xl:table-cell md:table-cell">
         <template #body="{ data }">
           <div class="max-h-[50px] overflow-hidden text-ellipsis whitespace-normal break-words line-clamp-2">
             {{ data.heading }}
           </div>
         </template>
       </Column>
-      <Column field="content" header="Content" style="width: 25%"  class="hidden lg:table-cell xl:table-cell md:table-cell">
+      <Column field="content" header="Content" style="width: 25%"
+        class="hidden lg:table-cell xl:table-cell md:table-cell">
         <template #body="{ data }">
           <div class="max-h-[50px] overflow-hidden text-ellipsis whitespace-normal break-words line-clamp-2">
             {{ data.content }}
@@ -64,13 +65,14 @@
   <div>
     <Dialog v-model:visible="visible" modal header="Edit Blog" :style="{ width: '50vw' }" class='bg-slate-600'
       :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+      <form @submit.prevent="updateBlog">
       <div class="flex items-center gap-4 mb-4">
         <label for="title" class="font-semibold w-24">Title</label>
         <input id="title" v-model="selectedItem.title"
           class="flex-auto outline-none border border-bd_primary p-1 rounded-md shadow-md" autocomplete="off" />
       </div>
       <div class="flex items-center gap-4 mb-8">
-        <label for="text" class="font-semibold w-24">Text</label>
+        <label for="text" class="font-semibold w-24">Description</label>
         <input id="text" v-model="selectedItem.text"
           class="flex-auto outline-none border border-bd_primary p-1 rounded-md shadow-md" autocomplete="off" />
       </div>
@@ -86,16 +88,18 @@
           rows="5" />
       </div>
       <div class="flex items-center gap-4 mb-8">
-        <label for="imageurl" class="font-semibold w-24">imageurl</label>
-        <input id="imageurl" v-model="selectedItem.title"
-          class="flex-auto outline-none border border-bd_primary p-1 rounded-md shadow-md" autocomplete="off" />
+        <label class="text-primary_15">Choose image</label>
+        <input @change="handleFileChange" type="file">
       </div>
       <div class="flex justify-end gap-2">
         <button @click="visible = false" class="bg-red-500 text-white px-4 py-2 rounded-lg">
           Cancel
         </button>
-        <button @click="visible = false" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Save</button>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">
+        Update Blog
+        </button>
       </div>
+      </form>
     </Dialog>
   </div>
   <!--  -->
@@ -111,9 +115,9 @@
     </div>
   </div>
   <!--  -->
-    <div>
-      <Toast />
-    </div>
+  <div>
+    <Toast />
+  </div>
 </template>
 <script setup>
 import Toast from 'primevue/toast';
@@ -124,7 +128,7 @@ import DataTable from 'primevue/datatable';
 import Dialog from 'primevue/dialog';
 import Column from 'primevue/column';
 import { ref, onMounted } from 'vue';
-import { deleteBlogById, getBlogs } from '@/api/blogsApi';
+import { deleteBlogById, getBlogs, updateBlogById } from '@/api/blogsApi';
 import { Trash2 } from 'lucide-vue-next';
 import { FilePenLine } from 'lucide-vue-next';
 import { FilterMatchMode } from '@primevue/core/api';
@@ -133,13 +137,16 @@ import { Search } from 'lucide-vue-next';
 const data = ref([]);
 const visible = ref(false);
 const isLoading = ref(false);
+
 const selectedItem = ref({
   title: '',
   text: '',
   heading: '',
   content: '',
-  imageUrl: '',
 });
+
+const selectedFile = ref(null);
+
 
 const toast = useToast();
 
@@ -154,6 +161,13 @@ const fetchData = async () => {
     isLoading.value = false;
   }
 };
+//
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    selectedFile.value = file;
+  }
+}
 //
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -171,14 +185,14 @@ const deleteItem = async (itemid) => {
       detail: 'delete success',
       life: 3000,
     })
-  if (res !== 200) {
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'delete fail',
-      life: 3000,
-    })
-  }
+    if (res !== 200) {
+      toast.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'delete fail',
+        life: 3000,
+      })
+    }
     console.log("Delete item:", itemid);
   }
 };
@@ -187,13 +201,30 @@ function handleEdit(data) {
   visible.value = true;
   console.log(selectedItem.value.imageUrl);
 }
-// const editItem = (item) => {
-//   console.log("Edit item:", item);
-//   // Xử lý chỉnh sửa item ở đây
-// };
 
+async function updateBlog() {
+  try {
+    const form = new FormData();
+    form.append('title', selectedItem.value.title);
+    form.append('text', selectedItem.value.text);
+    form.append('heading', selectedItem.value.heading);
+    form.append('content', selectedItem.value.content);
+    if (selectedFile.value) {
+      form.append('imageurl', selectedFile.value);
+    }
+    const response = await updateBlogById(selectedItem.value.id, form);
+    if (response === 200) {
+      toast.add({ severity: 'success', summary: 'Success', detail: 'update success', life: 3000 });
+      visible.value = false;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    toast.add({ severity: 'error', summary: 'Error', detail: 'update fail', life: 3000 });
+    throw error;
+  }
+}
+//
 onMounted(() => {
   fetchData();
-  // handleEdit();
 });
 </script>
