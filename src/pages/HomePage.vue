@@ -90,7 +90,7 @@ onBeforeUnmount(() => {
         class="w-full py-4 pl-5 rounded-lg bg-white drop-shadow-lg outline-none border border-bd_primary" />
       <Search class="absolute top-[30px] right-3 -translate-x-1/2 -translate-y-1/2 " />
       <div class="relative mt-3">
-        <div v-if="results.length > 0" class="relative min-h-96 overflow-y-scroll">
+        <div v-if="results.length > 0" class="absolute top-0 right-0 left-0 z-50 min-h-64 bg-bg_primary overflow-y-scroll">
           <div class="absolute flex flex-col top-0 right-0 left-0 p-4 bg-slate-200 gap-3 rounded-md">
             <div v-for="(blog, index) in results" :key="index" class="relative flex flex-col">
               <router-link :to="{ name: 'BlogDetail', params: { id: blog.id } }">
