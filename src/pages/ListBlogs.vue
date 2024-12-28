@@ -12,19 +12,19 @@
           </div>
         </div>
       </template>
-      <template #empty> No customers found. </template>
-      <template #loading> Loading customers data. Please wait. </template>
+      <template #empty> No blog found. </template>
+      <template #loading> Loading blog data. Please wait. </template>
       <!--  -->
       <Column field="title" header="Name" style="width: 25%">
         <template #body="{ data }">
-          <div class="max-h-[50px] overflow-hidden text-ellipsis whitespace-normal break-words line-clamp-2">
+          <div class="max-h-[50px] max-w-10 sm:max-w-full md:max-w-full lg:max-w-full xl:max-w-full overflow-hidden text-ellipsis whitespace-normal break-words line-clamp-2">
             {{ data.title }}
           </div>
         </template>
       </Column>
       <Column field="text" header="Text" style="width: 25%">
         <template #body="{ data }">
-          <div class="max-h-[50px] overflow-hidden text-ellipsis whitespace-normal break-words line-clamp-2">
+          <div class="max-h-[50px] max-w-10 sm:max-w-full md:max-w-full lg:max-w-full xl:max-w-full overflow-hidden text-ellipsis whitespace-normal break-words line-clamp-2">
             {{ data.text }}
           </div>
         </template>
@@ -96,7 +96,8 @@
           Cancel
         </button>
         <button type="submit" class="bg-blue-500 text-white p-2 rounded">
-        Update Blog
+        <p v-if="!isUploading">Update Blog</p>
+        <img v-if="isUploading" class="w-8 h-8" src="../assets/icons/loading.svg" alt="loading" />
         </button>
       </div>
       </form>
@@ -137,6 +138,7 @@ import { Search } from 'lucide-vue-next';
 const data = ref([]);
 const visible = ref(false);
 const isLoading = ref(false);
+const isUploading = ref(false);
 
 const selectedItem = ref({
   title: '',
@@ -185,6 +187,7 @@ const deleteItem = async (itemid) => {
       detail: 'delete success',
       life: 3000,
     })
+    fetchData();
     if (res !== 200) {
       toast.add({
         severity: 'error',
@@ -203,6 +206,7 @@ function handleEdit(data) {
 }
 
 async function updateBlog() {
+  isUploading.value = true;
   try {
     const form = new FormData();
     form.append('title', selectedItem.value.title);
@@ -216,11 +220,14 @@ async function updateBlog() {
     if (response === 200) {
       toast.add({ severity: 'success', summary: 'Success', detail: 'update success', life: 3000 });
       visible.value = false;
+      fetchData();
     }
   } catch (error) {
     console.error('Error:', error);
-    toast.add({ severity: 'error', summary: 'Error', detail: 'update fail', life: 3000 });
+    toast.add({ severity: 'error', summary: 'Error', detail: error, life: 3000 });
     throw error;
+  } finally {
+    isUploading.value = false;
   }
 }
 //

@@ -59,3 +59,15 @@ export const createBlog = async (data) => {
     throw error;
   }
 };
+
+export const getBlogById = async (id) => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_APP_SERVER_URL}/blog/${id}`
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching blog:", error);
+    throw error;
+  }
+};

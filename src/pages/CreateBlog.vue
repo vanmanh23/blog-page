@@ -7,7 +7,7 @@
           <label class="text-primary_15">Title</label>
           <input v-model="form.title" type="text"
             class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1">
-            <p v-if="errors.title" class="text-red-500 text-sm">{{ errors.title }}</p>
+          <p v-if="errors.title" class="text-red-500 text-sm">{{ errors.title }}</p>
         </div>
         <div class="flex flex-col gap-2">
           <label class="text-primary_15">Description</label>
@@ -19,7 +19,7 @@
           <label class="text-primary_15">Heading</label>
           <input v-model="form.heading" type="text"
             class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1">
-            <p v-if="errors.heading" class="text-red-500 text-sm">{{ errors.heading }}</p>
+          <p v-if="errors.heading" class="text-red-500 text-sm">{{ errors.heading }}</p>
         </div>
         <div class="flex flex-col gap-2">
           <label class="text-primary_15">Choose image</label>
@@ -30,7 +30,7 @@
           <label class="text-primary_15">Content</label>
           <textarea v-model="form.content" type="text"
             class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1" rows="5" />
-            <p v-if="errors.content" class="text-red-500 text-sm">{{ errors.content }}</p>
+          <p v-if="errors.content" class="text-red-500 text-sm">{{ errors.content }}</p>
         </div>
         <div class="flex justify-end">
           <button @click="createPost" class="bg-blue-500 text-white px-4 py-2 rounded-lg">
@@ -41,17 +41,20 @@
       </div>
     </div>
     <div class="md:flex hidden flex-col gap-5 px-5 py-5 bg-white w-1/3 h-fit rounded-xl">
-      <h3 class="text-primary_25 font-semibold text-xl uppercase text-center">Recent post</h3>
-      <div class="flex flex-col gap-2">
-        <p class="uppercase text-primary_20">DESIGN PROCESS</p>
-        <p>Our 15 favorite websites from August </p>
-        <p>The beginners guide to user research</p>
-        <p class="uppercase text-primary_20">insparatio</p>
-        <p>Web page layout 101: website anatomy every designer needs to learn</p>
-        <p class="uppercase text-primary_20">FREELANCING</p>
-        <p>10 essential sections to a high landing
-          page</p>
+      <div v-if="!isFetchingDataRecent">
+        <h3 class="text-primary_25 font-semibold text-xl uppercase text-center">Recent post</h3>
+        <div class="flex flex-col gap-2 ">
+        <p class="uppercase text-primary_20 overflow-hidden text-ellipsis whitespace-normal break-words line-clamp-3">{{ DataRecent.title }}</p>
+        <p class="text-primary_20 overflow-hidden text-ellipsis whitespace-normal break-words line-clamp-3">{{ DataRecent.text }}</p>
       </div>
+      </div>
+        <div v-if="isFetchingDataRecent" class="flex flex-col w-full">
+          <div class="flex flex-col gap-4 mb-4">
+            <Skeleton height="60px" class=""></Skeleton>
+            <Skeleton height="30px" class=""></Skeleton>
+            <Skeleton height="30px" class=""></Skeleton>
+          </div>
+        </div>
     </div>
   </div>
   <div>
@@ -59,14 +62,15 @@
   </div>
 </template>
 <script setup>
+import Skeleton from 'primevue/skeleton';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
-import { createBlog } from "@/api/blogsApi";
-import { ref } from "vue";
-import { useRouter } from 'vue-router';
+import { createBlog, getBlogs } from "@/api/blogsApi";
+import { onMounted, ref } from "vue";
 
-const router = useRouter();
 const isLoading = ref(false);
+const isFetchingDataRecent = ref(false);
+const DataRecent = ref([]);
 const form = ref({
   title: "",
   text: "",
@@ -84,11 +88,15 @@ const errors = ref({
 const toast = useToast();
 const validateField = () => {
   errors.value.title = form.value.title.trim() === "" ? "Title is required" : null;
-  errors.value.text = form.value.text.trim() === "" ? "Description is required" : null;
+  errors.value.text = form.value.text.trim() === "" ? "Description is required" : form.value.text.trim().length < 100 ? "Description must be at least 100 characters long" : null;
   errors.value.heading = form.value.heading.trim() === "" ? "Heading is required" : null;
   errors.value.image = form.value.image === null ? "Image is required" : null;
-  errors.value.content = form.value.content.trim() === "" ? "Content is required" : null;
-
+  errors.value.content =
+    form.value.content.trim() === ""
+      ? "Content is required"
+      : form.value.content.trim().length < 300
+        ? "Content must be at least 300 characters long"
+        : null;
   return Object.values(errors.value).every((error) => error === null);
 };
 const handleFileChange = (event) => {
@@ -113,9 +121,15 @@ const createPost = async () => {
 
   try {
     const res = await createBlog(formData);
-    if (res === 200) {
+    if (res === 200 || res === 201) {
+      form.value.title = "";
+      form.value.text = "";
+      form.value.heading = "";
+      form.value.image = null;
+      form.value.content = "";
+
       toast.add({ severity: 'success', summary: 'Success', detail: 'Create success', life: 3000 });
-      router.push('/');
+      // router.push('/');
     } else {
       toast.add({ severity: 'error', summary: 'Error', detail: 'Create fail', life: 3000 });
     }
@@ -125,6 +139,24 @@ const createPost = async () => {
     toast.add({ severity: 'error', summary: 'Error', detail: 'Create fail', life: 3000 });
   } finally {
     isLoading.value = false;
+    fetchDataRecent();
   }
 };
+//
+const fetchDataRecent = async () => {
+  isFetchingDataRecent.value = true;
+  try {
+    const response = await getBlogs();
+    const lengthData = response.result.length;
+    DataRecent.value = response.result[lengthData - 1];
+    console.log(DataRecent.value);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    isFetchingDataRecent.value = false;
+  }
+}
+onMounted(() => {
+  fetchDataRecent();
+});
 </script>

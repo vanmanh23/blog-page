@@ -1,9 +1,8 @@
 <template>
-    <!-- <div>{{ $route.params.id }}</div> -->
-     <div class="flex flex-col gap-5 md:px-[200px] px-5">
+     <div v-if="!isLoading" class="flex flex-col gap-5 md:px-[200px] px-5">
         <div class="flex flex-col md:gap-5 gap-2">
-            <h2 class="text-primary_15 md:text-[24px] text-[18px] font-bold"> Reasons to Build Your Website with WP Page Builder</h2>
-            <p class="text-black md:text-[12px] text-[12px]">People’s quest for creating websites has easily taken us to a new era of site development. Where, with the availability of robust page building tools, creating websites has become a lot more fun (especially for non-developers).</p>
+            <h2 class="text-primary_15 md:text-[24px] text-[18px] font-bold">{{ BlogData.title }}</h2>
+            <p class="text-black md:text-[12px] text-[12px]">{{ BlogData.text }}</p>
         </div>
         <div class="flex flex-row md:gap-6 gap-1 md:mt-10 mt-3">
             <div class="w-1/12">
@@ -15,10 +14,10 @@
                 </ul>
             </div>
             <div class="flex flex-col gap-3">
-                <h2 class="text-primary_25 md:text-[18px] text-[14px] font-semibold">What’s Special About WP Page Builder?</h2>
-                <p  class="text-primary_20 text-[14px]">Wondering what makes WP Page Builder so special? I would say, what doesn’t? It’s developed by the team over at Themeum, who has been creating WordPress themes since 2013. As mentioned above, the plugin is a full pack of essential site building elements with all modern the modern functionality you’ve come to expect from a page builder plugin. Let’s have a look below at all of the juicy features WP Page Builder includes.</p>
-                <img src="https://ichef.bbci.co.uk/ace/standard/1024/cpsprodpb/4550/live/3ebc72e0-7320-11ef-ba9a-01dc5b04cf6a.jpg" alt="ms">
-                <p class="text-primary_20 text-[14px]">	•	Form: Create web forms effortlessly. It gives you a convenient way to style your forms as you desire. The Form add-on itself is capable of setting up any kind of form without needing to install any plugin. Moreover, you can manage form plugins and enable reCAPTCHA with just a simple click. There is also an add-on for Contact Form 7 if you prefer.</p>
+                <h2 class="text-primary_25 md:text-[18px] text-[14px] font-semibold">{{ BlogData.heading }}</h2>
+                <p  class="text-slate-600 text-[14px]">{{ BlogData.content }}</p>
+                <img :src="BlogData.imageUrl" :alt="BlogData.imageUrl">
+                <!-- <p class="text-primary_20 text-[14px]">{{ BlogData.content }}</p> -->
             </div>
             <div class="flex flex-col gap-3 w-1/12">
                 <div class="flex flex-col items-center">
@@ -32,8 +31,42 @@
             </div>
         </div>
      </div>
+     <div v-if="isLoading" class="flex flex-col w-full px-[20px] md:px-[150px] bg-bg_primary pt-9 gap-3 overflow-x-scroll">
+    <div class="flex flex-col gap-4 mb-4">
+      <Skeleton height="60px" class=""></Skeleton>
+      <Skeleton height="30px" class=""></Skeleton>
+      <Skeleton height="300px" width="90%" class="m-auto"></Skeleton>
+      <Skeleton height="30px"></Skeleton>
+      <Skeleton height="30px"></Skeleton>
+    </div>
+  </div>
 </template>
 
 <script setup>
+import Skeleton from 'primevue/skeleton';
+import { getBlogById } from '@/api/blogsApi';
 import { Heart, Eye } from 'lucide-vue-next';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const BlogData = ref([]);
+const isLoading = ref(false);
+const route = useRoute();
+const paramsId = route.params.id;
+const fetchData = async () => {
+  isLoading.value = true;
+  try {
+    const res = await getBlogById(paramsId);
+    BlogData.value = res;
+    console.log(BlogData.value);
+  } catch (error) {
+    console.error("Error fetching blog:", error);
+    throw error;
+  } finally {
+    isLoading.value = false;
+  }
+}
+onMounted(() => {
+  fetchData();
+});
 </script>

@@ -1,6 +1,6 @@
 <template>
   <header class="relative flex flex-row justify-between w-full h-[70px] items-center px-5 md:px-[100px]">
-    <router-link :to="{ name: 'home' }" class="inline-flex items-center h-full text-orange-500 font-bold">
+    <router-link :to="{ name: 'home' }" class="inline-flex items-center outline-none h-full text-orange-500 font-bold">
       <img src="../assets/icons/logo.svg" alt="logo" />
     </router-link>
     <div class="md:flex hidden items-center gap-2 md:gap-[40px] sm:gap-[20px]">
@@ -30,9 +30,6 @@
       </router-link>
       <router-link :to="{ name: 'ListBlogs' }" class="transition-colors hover:bg-orange-500 hover:text-white">
         Reading list
-      </router-link>
-      <router-link class="transition-colors hover:bg-orange-500 hover:text-white">
-        Topics
       </router-link>
       <router-link :to="{ name: 'CreateBlog' }">
         <ButtonDefault title="Create" />

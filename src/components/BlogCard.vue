@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-5">
-    <div class="w-full h-full">
-      <img :src="img" :alt="img" class="w-full h-full rounded-md" />
+    <div class="relative w-full h-[200px] overflow-hidden">
+      <img :src="img" :alt="img" class="w-full h-full object-cover rounded-md" />
     </div>
     <div class="flex flex-col gap-2">
       <p class="md:text-[12px] sm:text-[15px] text-[11px] uppercase"><span class="text-primary_20">by</span> TOMAS

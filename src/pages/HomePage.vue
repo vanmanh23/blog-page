@@ -53,7 +53,7 @@ onMounted(() => {
         </div>
         <div v-if="results.length === 0 && searchInput"
           class="absolute flex flex-col top-0 right-0 left-0 p-4 gap-3 rounded-md">
-          <div class="w-full flex justify-center border border-bd_primary bg-white rounded-md p-4 shadow-2xl drop-shadow-xl">
+          <div class="w-full z-50 text-4xl font-semibold uppercase flex justify-center border border-bd_primary bg-white rounded-md p-4 shadow-2xl drop-shadow-xl">
             <p>do not found</p>
           </div>
         </div>
