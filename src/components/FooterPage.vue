@@ -13,7 +13,7 @@
             </ul>
         </div>
         <div>
-            <p class="md:text-[14px] text-[10px] text-primary_20">All Rights Reserved 2018 3layers</p>
+            <p class="md:text-[14px] text-[10px] text-primary_20">All Rights Reserved 2024 3layers</p>
         </div>
     </footer>
 </template>
