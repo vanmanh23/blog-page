@@ -25,10 +25,10 @@
     </div>
     <nav v-show="isMenuOpen"
       class="absolute flex flex-col top-full z-10 left-0 w-full text-black bg-white mt-0 space-y-2 text-center py-2 transition-all">
-      <router-link class=" transition-colors hover:bg-orange-500 hover:text-white text-primary_10">
+      <router-link class=" transition-colors hover:bg-slate-100 hover:text-black text-primary_10">
         New
       </router-link>
-      <router-link :to="{ name: 'ListBlogs' }" class="transition-colors hover:bg-orange-500 hover:text-white">
+      <router-link :to="{ name: 'ListBlogs' }" class="transition-colors hover:bg-slate-100 hover:text-black">
         Reading list
       </router-link>
       <router-link :to="{ name: 'CreateBlog' }">
