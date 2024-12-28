@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
   <div class="flex flex-col w-full px-[20px] sm:px-[50px] md:px-[50px] lg:px-[140px] bg-bg_primary pt-9 gap-3">
     <div class="relative mb-3">
       <input v-model="searchInput" type="text" placeholder="Search Blog..." @input="filterList"
-        class="w-full py-4 pl-5 rounded-lg bg-white drop-shadow-lg outline-none border border-bd_primary" />
+        class="w-full py-4 pl-5 rounded-lg bg-white drop-shadow-lg outline-none border dark:text-gray-800 text-gray-800 border-bd_primary" />
       <Search class="absolute top-[30px] right-3 -translate-x-1/2 -translate-y-1/2 " />
       <div class="relative mt-3">
         <div v-if="results.length > 0" class="absolute top-0 right-0 left-0 z-50 min-h-64 bg-bg_primary overflow-y-scroll">
