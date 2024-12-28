@@ -6,19 +6,19 @@
         <div class="flex flex-col gap-2">
           <label class="text-primary_15">Title</label>
           <input v-model="form.title" type="text"
-            class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1">
+            class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1 border border-bd_primary">
           <p v-if="errors.title" class="text-red-500 text-sm">{{ errors.title }}</p>
         </div>
         <div class="flex flex-col gap-2">
           <label class="text-primary_15">Description</label>
           <textarea v-model="form.text" type="text"
-            class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1" rows="2" />
+            class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1 border border-bd_primary" rows="2" />
           <p v-if="errors.text" class="text-red-500 text-sm">{{ errors.text }}</p>
         </div>
         <div class="flex flex-col gap-2">
           <label class="text-primary_15">Heading</label>
           <input v-model="form.heading" type="text"
-            class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1">
+            class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1 border border-bd_primary">
           <p v-if="errors.heading" class="text-red-500 text-sm">{{ errors.heading }}</p>
         </div>
         <div class="flex flex-col gap-2">
@@ -29,7 +29,7 @@
         <div class="flex flex-col gap-2">
           <label class="text-primary_15">Content</label>
           <textarea v-model="form.content" type="text"
-            class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1" rows="5" />
+            class="w-full drop-shadow-lg bg-white rounded-lg outline-none px-1 py-1 border border-bd_primary" rows="5" />
           <p v-if="errors.content" class="text-red-500 text-sm">{{ errors.content }}</p>
         </div>
         <div class="flex justify-end">
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <div class="md:flex hidden flex-col gap-5 px-5 py-5 bg-white w-1/3 h-fit rounded-xl">
+    <div class="md:flex hidden flex-col gap-5 px-5 py-5 bg-white w-1/3 h-fit rounded-xl border border-bd_primary">
       <div v-if="!isFetchingDataRecent">
         <h3 class="text-primary_25 font-semibold text-xl uppercase text-center">Recent post</h3>
         <div class="flex flex-col gap-2 ">
