@@ -21,15 +21,39 @@ const fetchData = async () => {
     isLoading.value = false;
   }
 };
+// const filterList = () => {
+//   if (!searchInput.value) {
+//     console.log("Search input is empty!");
+//     results.value = [];
+//     return;
+//   }
+//   const resultsSearch = data.value.filter((item) => item.title.toLowerCase().includes(searchInput.value.toLowerCase()));
+//   results.value = resultsSearch;
+// }
+function removeVietnameseTones(str) {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase();
+}
+
 const filterList = () => {
   if (!searchInput.value) {
     console.log("Search input is empty!");
     results.value = [];
     return;
   }
-  const resultsSearch = data.value.filter((item) => item.title.toLowerCase().includes(searchInput.value.toLowerCase()));
+
+  const normalizedSearch = removeVietnameseTones(searchInput.value);
+  const resultsSearch = data.value.filter((item) =>
+    removeVietnameseTones(item.title).includes(normalizedSearch)
+  );
+
   results.value = resultsSearch;
-}
+};
+
 
 onMounted(() => {
   fetchData();
