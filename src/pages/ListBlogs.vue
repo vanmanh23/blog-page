@@ -5,7 +5,7 @@
       <!--  -->
       <template #header>
         <div class="relative flex justify-end">
-          <input v-model="filters['title'].value" placeholder="Keyword Search"
+          <input v-model="filters['title'].value" placeholder="Search by name"
             class="border border-bd_primary outline-none shadow-lg p-2 rounded-lg" />
           <div class="absolute top-1/2 right-1 -translate-x-1/2 -translate-y-1/2">
             <Search />
