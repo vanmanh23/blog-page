@@ -9,5 +9,13 @@ import Aura from '@primevue/themes/aura';
 createApp(App)
   .use(router)
   .use(ToastService)
-  .use(PrimeVue, { theme: {preset: Aura} })
+  .use(PrimeVue, {
+    // Default theme configuration
+    theme: {
+        preset: Aura,
+        options: {
+            darkModeSelector: '.my-app-dark',
+        }
+    }
+ })
   .mount('#app')
