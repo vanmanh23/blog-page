@@ -65,7 +65,7 @@
   <div>
     <Dialog v-model:visible="visible" modal header="Edit Blog" :style="{ width: '50vw' }" class='bg-slate-600'
       :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-      <form @submit.prevent="updateBlog">
+      <!-- <form @submit.prevent="updateBlog"> -->
       <div class="flex items-center gap-4 mb-4">
         <label for="title" class="font-semibold w-24">Title</label>
         <input id="title" v-model="selectedItem.title"
@@ -95,12 +95,12 @@
         <button @click="visible = false" class="bg-red-500 text-white px-4 py-2 rounded-lg">
           Cancel
         </button>
-        <button type="submit" class="bg-blue-500 text-white p-2 rounded">
+        <button type="submit" @click="updateBlog" class="bg-blue-500 text-white p-2 rounded">
         <p v-if="!isUploading">Update Blog</p>
         <img v-if="isUploading" class="w-8 h-8" src="../assets/icons/loading.svg" alt="loading" />
         </button>
       </div>
-      </form>
+      <!-- </form> -->
     </Dialog>
   </div>
   <!--  -->
